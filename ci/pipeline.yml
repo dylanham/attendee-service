@@ -27,23 +27,17 @@ jobs:
 - name: deploy
   public: true
   plan:
-  - get: attendee-service-source
-    trigger: true
-    passed: [test]
   - task: package
     file: attendee-service-source/ci/tasks/package.yml
   - put: deploy-attendee-service
     params:
-      manifest: attendee-service-source/manifest.yml
+      manifest: attendee-service/manifest.yml
       path: package-output/attendee-service.jar
 
 - name: smoke_test
   public: true
   plan:
-  - get: attendee-service-source
-    trigger: true
-    passed: [deploy]
   - task: smoke_test
     file: attendee-service-source/ci/tasks/smoke_test.yml
     params:
-      ATTENDEE_SERVICE_URL: https://attendee-service-clotty-megalopolis.cfapps.pez.pivotal.io 
+      ATTENDEE_SERVICE_URL: http://attendee-service-censorable-arrival.cfapps-02.haas-66.pez.pivotal.io
